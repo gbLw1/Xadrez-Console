@@ -40,7 +40,7 @@ public class PartidaDeXadrez
 
     public void ValidarPosicaoDestino(Posicao origem, Posicao destino)
     {
-        if (Tabuleiro.Peca(origem).PodeMoverPara(destino) is false)
+        if (Tabuleiro.Peca(origem).MovimentoPossivel(destino) is false)
             throw new TabuleiroException("Posição de destino inválida!");
     }
 
