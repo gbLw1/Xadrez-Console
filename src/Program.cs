@@ -20,9 +20,7 @@ public class Program
                 try
                 {
                     Clear();
-                    Tela.ImprimirTabuleiro(partida.Tabuleiro);
-                    WriteLine($"Turno: {partida.Turno}");
-                    WriteLine($"Aguardando jogada: {partida.JogadorAtual}");
+                    Tela.ImprimirPartida(partida);
 
                     Write("Origem: ");
                     Posicao origem = Tela.LerPosicaoXadrez().FromPosicaoXadrezToPosicaoProgram();
