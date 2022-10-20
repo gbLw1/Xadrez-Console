@@ -33,9 +33,10 @@ public class Program
                     Clear();
                     Tela.ImprimirTabuleiro(partida.Tabuleiro, posicoesPossiveis);
 
-
                     Write("Destino: ");
                     Posicao destino = Tela.LerPosicaoXadrez().FromPosicaoXadrezToPosicaoProgram();
+                    partida.ValidarPosicaoDestino(origem, destino);
+
 
                     partida.RealizarJogada(origem, destino);
                 }

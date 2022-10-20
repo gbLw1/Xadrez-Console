@@ -32,6 +32,12 @@ public class PartidaDeXadrez
             throw new TabuleiroException("Não há movimentos possíveis para a peça de origem escolhida!");
     }
 
+    public void ValidarPosicaoDestino(Posicao origem, Posicao destino)
+    {
+        if (Tabuleiro.Peca(origem).PodeMoverPara(destino) is false)
+            throw new TabuleiroException("Posição de destino inválida!");
+    }
+
     void ExecutaMovimento(Posicao origem, Posicao destino)
     {
         Peca? p = Tabuleiro.RetirarPeca(origem);
