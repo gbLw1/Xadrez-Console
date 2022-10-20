@@ -17,24 +17,33 @@ public class Program
 
             while (partida.Encerrada is false)
             {
-                Clear();
-                Tela.ImprimirTabuleiro(partida.Tabuleiro);
-                WriteLine($"Turno: {partida.Turno}");
-                WriteLine($"Aguardando jogada: {partida.JogadorAtual}");
+                try
+                {
+                    Clear();
+                    Tela.ImprimirTabuleiro(partida.Tabuleiro);
+                    WriteLine($"Turno: {partida.Turno}");
+                    WriteLine($"Aguardando jogada: {partida.JogadorAtual}");
 
-                Write("Origem: ");
-                Posicao origem = Tela.LerPosicaoXadrez().FromPosicaoXadrezToPosicaoProgram();
+                    Write("Origem: ");
+                    Posicao origem = Tela.LerPosicaoXadrez().FromPosicaoXadrezToPosicaoProgram();
+                    partida.ValidarPosicaoOrigem(origem);
 
-                bool[,] posicoesPossiveis = partida.Tabuleiro.Peca(origem).MovimentosPossiveis();
+                    bool[,] posicoesPossiveis = partida.Tabuleiro.Peca(origem).MovimentosPossiveis();
 
-                Clear();
-                Tela.ImprimirTabuleiro(partida.Tabuleiro, posicoesPossiveis);
+                    Clear();
+                    Tela.ImprimirTabuleiro(partida.Tabuleiro, posicoesPossiveis);
 
 
-                Write("Destino: ");
-                Posicao destino = Tela.LerPosicaoXadrez().FromPosicaoXadrezToPosicaoProgram();
+                    Write("Destino: ");
+                    Posicao destino = Tela.LerPosicaoXadrez().FromPosicaoXadrezToPosicaoProgram();
 
-                partida.RealizarJogada(origem, destino);
+                    partida.RealizarJogada(origem, destino);
+                }
+                catch (TabuleiroException ex)
+                {
+                    WriteLine(ex.Message);
+                    ReadKey();
+                }
             }
 
         }

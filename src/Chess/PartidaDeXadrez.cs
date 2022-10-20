@@ -1,5 +1,6 @@
 using Xadrez_Console.Board;
 using Xadrez_Console.Board.Enums;
+using Xadrez_Console.Board.Exceptions;
 
 namespace Xadrez_Console.Chess;
 
@@ -17,6 +18,18 @@ public class PartidaDeXadrez
         JogadorAtual = Cor.Branca;
         Encerrada = false;
         ColocarPecas();
+    }
+
+    public void ValidarPosicaoOrigem(Posicao posicao)
+    {
+        if (Tabuleiro.Peca(posicao) is null)
+            throw new TabuleiroException("Não existe peça na posição de origem escolhida!");
+
+        if (JogadorAtual != Tabuleiro.Peca(posicao).Cor)
+            throw new TabuleiroException("A peça de origem escolhida não é sua!");
+
+        if (Tabuleiro.Peca(posicao).ExisteMovimentosPossiveis() is false)
+            throw new TabuleiroException("Não há movimentos possíveis para a peça de origem escolhida!");
     }
 
     void ExecutaMovimento(Posicao origem, Posicao destino)
