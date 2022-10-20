@@ -4,7 +4,7 @@ namespace Xadrez_Console.Board;
 
 public abstract class Peca
 {
-    public Posicao? Posicao { get; set; }
+    public Posicao Posicao { get; set; } = default!;
     public Cor Cor { get; protected set; }
     public int QtdeMovimentos { get; protected set; }
     public Tabuleiro Tabuleiro { get; protected set; }
@@ -18,6 +18,9 @@ public abstract class Peca
 
     public void IncrementarQtdeMovimentos()
         => QtdeMovimentos++;
+
+    public void DecrementarQtdeMovimentos()
+        => QtdeMovimentos--;
 
     public bool ExisteMovimentosPossiveis()
     {
