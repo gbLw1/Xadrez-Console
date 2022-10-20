@@ -18,7 +18,7 @@ public class Rei : Peca
         bool[,] matriz = new bool[Tabuleiro.Linhas, Tabuleiro.Colunas];
 
         // Possíveis posições
-        Posicao pos = new Posicao(0, 0);
+        Posicao pos = new (0, 0);
 
         // acima
         pos.DefinirValores(Posicao!.Linha - 1, Posicao.Coluna);
