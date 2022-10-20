@@ -19,6 +19,8 @@ public class Program
             {
                 Clear();
                 Tela.ImprimirTabuleiro(partida.Tabuleiro);
+                WriteLine($"Turno: {partida.Turno}");
+                WriteLine($"Aguardando jogada: {partida.JogadorAtual}");
 
                 Write("Origem: ");
                 Posicao origem = Tela.LerPosicaoXadrez().FromPosicaoXadrezToPosicaoProgram();
@@ -32,7 +34,7 @@ public class Program
                 Write("Destino: ");
                 Posicao destino = Tela.LerPosicaoXadrez().FromPosicaoXadrezToPosicaoProgram();
 
-                partida.ExecutaMovimento(origem, destino);
+                partida.RealizarJogada(origem, destino);
             }
 
         }

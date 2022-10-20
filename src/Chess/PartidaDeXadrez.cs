@@ -6,25 +6,38 @@ namespace Xadrez_Console.Chess;
 public class PartidaDeXadrez
 {
     public Tabuleiro Tabuleiro { get; private set; }
-    private int turno;
-    private Cor jogadorAtual;
+    public int Turno { get; private set; }
+    public Cor JogadorAtual { get; private set; }
     public bool Encerrada { get; private set; }
 
     public PartidaDeXadrez()
     {
         Tabuleiro = new Tabuleiro(8, 8);
-        turno = 1;
-        jogadorAtual = Cor.Branca;
+        Turno = 1;
+        JogadorAtual = Cor.Branca;
         Encerrada = false;
         ColocarPecas();
     }
 
-    public void ExecutaMovimento(Posicao origem, Posicao destino)
+    void ExecutaMovimento(Posicao origem, Posicao destino)
     {
         Peca? p = Tabuleiro.RetirarPeca(origem);
         p!.IncrementarQtdeMovimentos();
         Peca? pecaCapturada = Tabuleiro.RetirarPeca(destino);
         Tabuleiro.ColocarPeca(p, destino);
+    }
+
+    public void RealizarJogada(Posicao origem, Posicao destino)
+    {
+        ExecutaMovimento(origem, destino);
+        Turno++;
+        MudarJogador();
+    }
+
+    void MudarJogador()
+    {
+        if (JogadorAtual == Cor.Branca) JogadorAtual = Cor.Preta;
+        else JogadorAtual = Cor.Branca;
     }
 
     void ColocarPecas()
@@ -56,10 +69,10 @@ public class PartidaDeXadrez
         );
 
         // Pretas
-                Tabuleiro.ColocarPeca(
-            new Torre(Tabuleiro, Cor.Preta),
-            new PosicaoXadrez('c', 7).FromPosicaoXadrezToPosicaoProgram()
-        );
+        Tabuleiro.ColocarPeca(
+    new Torre(Tabuleiro, Cor.Preta),
+    new PosicaoXadrez('c', 7).FromPosicaoXadrezToPosicaoProgram()
+);
         Tabuleiro.ColocarPeca(
             new Torre(Tabuleiro, Cor.Preta),
             new PosicaoXadrez('c', 8).FromPosicaoXadrezToPosicaoProgram()
