@@ -144,7 +144,7 @@ public class PartidaDeXadrez
         {
             bool[,] matriz = peca.MovimentosPossiveis();
             // se alguma peça do tabuleiro pode mover para o rei, está em xeque
-            if (matriz[R.Posicao.Linha, R.Posicao.Coluna])
+            if (matriz[R.Posicao!.Linha, R.Posicao.Coluna])
                 return true;
         }
 

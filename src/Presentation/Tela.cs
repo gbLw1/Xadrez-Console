@@ -13,6 +13,7 @@ public static class Tela
         ImprimirPecasCapturadas(partida);
         WriteLine($"Turno: {partida.Turno}");
         WriteLine($"Aguardando jogada: {partida.JogadorAtual}");
+        if (partida.Xeque) WriteLine("XEQUE!");
     }
 
     static void ImprimirPecasCapturadas(PartidaDeXadrez partida)
