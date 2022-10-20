@@ -3,11 +3,12 @@ using Xadrez_Console.Board.Enums;
 
 namespace Xadrez_Console.Chess;
 
-public class Torre : Peca
+public class Bispo : Peca
 {
-    public Torre(Tabuleiro tabuleiro, Cor cor) : base(tabuleiro, cor) { }
 
-    public override string ToString() => "T";
+    public Bispo(Tabuleiro tabuleiro, Cor cor) : base(tabuleiro, cor) { }
+
+    public override string ToString() => "B";
 
     bool PodeMover(Posicao posicao)
     {
@@ -19,47 +20,46 @@ public class Torre : Peca
     {
         bool[,] matriz = new bool[Tabuleiro.Linhas, Tabuleiro.Colunas];
 
-        // Possíveis posições
         Posicao pos = new (0, 0);
 
-        // acima
-        pos.DefinirValores(Posicao!.Linha - 1, Posicao.Coluna);
+        // NO
+        pos.DefinirValores(Posicao!.Linha - 1, Posicao.Coluna - 1);
         while (PodeMover(pos))
         {
             matriz[pos.Linha, pos.Coluna] = true;
             if (Tabuleiro.Peca(pos) is not null && Tabuleiro.Peca(pos).Cor != Cor)
                 break;
-            pos.Linha -= 1;
+            pos.DefinirValores(Posicao!.Linha - 1, Posicao.Coluna - 1);
         }
 
-        // baixo
-        pos.DefinirValores(Posicao!.Linha + 1, Posicao.Coluna);
+        // NE
+        pos.DefinirValores(Posicao!.Linha - 1, Posicao.Coluna + 1);
         while (PodeMover(pos))
         {
             matriz[pos.Linha, pos.Coluna] = true;
             if (Tabuleiro.Peca(pos) is not null && Tabuleiro.Peca(pos).Cor != Cor)
                 break;
-            pos.Linha += 1;
+            pos.DefinirValores(Posicao!.Linha - 1, Posicao.Coluna + 1);
         }
 
-        // direita
-        pos.DefinirValores(Posicao!.Linha, Posicao.Coluna + 1);
+        // SE
+        pos.DefinirValores(Posicao!.Linha + 1, Posicao.Coluna + 1);
         while (PodeMover(pos))
         {
             matriz[pos.Linha, pos.Coluna] = true;
             if (Tabuleiro.Peca(pos) is not null && Tabuleiro.Peca(pos).Cor != Cor)
                 break;
-            pos.Coluna += 1;
+            pos.DefinirValores(Posicao!.Linha + 1, Posicao.Coluna + 1);
         }
 
-        // esquerda
-        pos.DefinirValores(Posicao!.Linha, Posicao.Coluna - 1);
+        // SO
+        pos.DefinirValores(Posicao!.Linha + 1, Posicao.Coluna - 1);
         while (PodeMover(pos))
         {
             matriz[pos.Linha, pos.Coluna] = true;
             if (Tabuleiro.Peca(pos) is not null && Tabuleiro.Peca(pos).Cor != Cor)
                 break;
-            pos.Coluna -= 1;
+            pos.DefinirValores(Posicao!.Linha + 1, Posicao.Coluna - 1);
         }
 
         return matriz;
