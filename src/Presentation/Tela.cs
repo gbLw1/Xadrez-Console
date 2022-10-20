@@ -12,8 +12,16 @@ public static class Tela
         ImprimirTabuleiro(partida.Tabuleiro);
         ImprimirPecasCapturadas(partida);
         WriteLine($"Turno: {partida.Turno}");
-        WriteLine($"Aguardando jogada: {partida.JogadorAtual}");
-        if (partida.Xeque) WriteLine("XEQUE!");
+        if (partida.Encerrada is false)
+        {
+            WriteLine($"Aguardando jogada: {partida.JogadorAtual}");
+            if (partida.Xeque) WriteLine("XEQUE!");
+        }
+        else
+        {
+            WriteLine("XEQUEMATE!");
+            WriteLine($"Vencedor: {partida.JogadorAtual}");
+        }
     }
 
     static void ImprimirPecasCapturadas(PartidaDeXadrez partida)
