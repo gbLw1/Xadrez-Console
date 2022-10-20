@@ -32,14 +32,8 @@ public static class Tela
             Write($"{8 - i} ");
             for (int j = 0; j < tabuleiro.Colunas; j++)
             {
-                if (posicoesPossiveis[i, j])
-                {
-                    BackgroundColor = fundoAlterado;
-                }
-                else
-                {
-                    BackgroundColor = fundoOriginal;
-                }
+                if (posicoesPossiveis[i, j]) BackgroundColor = fundoAlterado;
+                else BackgroundColor = fundoOriginal;
 
                 ImprimirPeca(tabuleiro.Peca(i, j));
                 BackgroundColor = fundoOriginal;

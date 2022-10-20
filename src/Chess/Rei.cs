@@ -9,8 +9,8 @@ public class Rei : Peca
 
     bool PodeMover(Posicao posicao)
     {
-        Peca posicaoDestino = Tabuleiro.Peca(posicao);
-        return (posicaoDestino is null || posicaoDestino.Cor != this.Cor) && Tabuleiro.PosicaoValida(posicao);
+        if (Tabuleiro.PosicaoValida(posicao) is false) return false;
+        return Tabuleiro.Peca(posicao) is null || Tabuleiro.Peca(posicao).Cor != Cor;
     }
 
     public override bool[,] MovimentosPossiveis()

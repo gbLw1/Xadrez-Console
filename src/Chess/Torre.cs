@@ -9,8 +9,8 @@ public class Torre : Peca
 
     bool PodeMover(Posicao posicao)
     {
-        Peca posicaoDestino = Tabuleiro.Peca(posicao);
-        return (posicaoDestino is null || posicaoDestino.Cor != this.Cor) && Tabuleiro.PosicaoValida(posicao);
+        if (Tabuleiro.PosicaoValida(posicao) is false) return false;
+        return Tabuleiro.Peca(posicao) is null || Tabuleiro.Peca(posicao).Cor != Cor;
     }
 
     public override bool[,] MovimentosPossiveis()
@@ -22,7 +22,7 @@ public class Torre : Peca
 
         // acima
         pos.DefinirValores(Posicao!.Linha - 1, Posicao.Coluna);
-        while(PodeMover(pos))
+        while (PodeMover(pos))
         {
             matriz[pos.Linha, pos.Coluna] = true;
             if (Tabuleiro.Peca(pos) is not null && Tabuleiro.Peca(pos).Cor != this.Cor)
@@ -32,7 +32,7 @@ public class Torre : Peca
 
         // baixo
         pos.DefinirValores(Posicao!.Linha + 1, Posicao.Coluna);
-        while(PodeMover(pos))
+        while (PodeMover(pos))
         {
             matriz[pos.Linha, pos.Coluna] = true;
             if (Tabuleiro.Peca(pos) is not null && Tabuleiro.Peca(pos).Cor != this.Cor)
@@ -42,7 +42,7 @@ public class Torre : Peca
 
         // direita
         pos.DefinirValores(Posicao!.Linha, Posicao.Coluna + 1);
-        while(PodeMover(pos))
+        while (PodeMover(pos))
         {
             matriz[pos.Linha, pos.Coluna] = true;
             if (Tabuleiro.Peca(pos) is not null && Tabuleiro.Peca(pos).Cor != this.Cor)
@@ -52,7 +52,7 @@ public class Torre : Peca
 
         // esquerda
         pos.DefinirValores(Posicao!.Linha, Posicao.Coluna - 1);
-        while(PodeMover(pos))
+        while (PodeMover(pos))
         {
             matriz[pos.Linha, pos.Coluna] = true;
             if (Tabuleiro.Peca(pos) is not null && Tabuleiro.Peca(pos).Cor != this.Cor)
