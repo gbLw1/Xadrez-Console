@@ -5,16 +5,24 @@ namespace Xadrez_Console.Chess;
 
 public class Peao : Peca
 {
-    public Peao(Tabuleiro tabuleiro, Cor cor) : base(tabuleiro, cor) { }
+    private readonly PartidaDeXadrez _partida;
+
+    public Peao(Tabuleiro tabuleiro,
+        Cor cor,
+        PartidaDeXadrez partida)
+        : base(tabuleiro, cor)
+        => _partida = partida;
 
     public override string ToString() => "P";
 
     bool ExisteInimigo(Posicao posicao)
-        => Tabuleiro.Peca(posicao) is not null
-        && Tabuleiro.Peca(posicao).Cor != Cor;
+    {
+        if (Tabuleiro.PosicaoValida(posicao) is false) return false;
+        return Tabuleiro.Peca(posicao) is not null && Tabuleiro.Peca(posicao).Cor != Cor;
+    }
 
     bool Livre(Posicao posicao)
-        => Tabuleiro.Peca(posicao) is null;
+        => Tabuleiro.PosicaoValida(posicao) ? Tabuleiro.Peca(posicao) is null : false;
 
     public override bool[,] MovimentosPossiveis()
     {
@@ -25,39 +33,62 @@ public class Peao : Peca
         if (Cor == Cor.Branca)
         {
             pos.DefinirValores(Posicao!.Linha - 1, Posicao.Coluna);
-            if (Tabuleiro.PosicaoValida(pos) && Livre(pos))
+            if (Livre(pos))
                 matriz[pos.Linha, pos.Coluna] = true;
 
             pos.DefinirValores(Posicao.Linha - 2, Posicao.Coluna);
-            if (Tabuleiro.PosicaoValida(pos) && Livre(pos) && QtdeMovimentos == 0)
+            if (Livre(pos) && QtdeMovimentos == 0)
                 matriz[pos.Linha, pos.Coluna] = true;
 
             pos.DefinirValores(Posicao.Linha - 1, Posicao.Coluna - 1);
-            if (Tabuleiro.PosicaoValida(pos) && ExisteInimigo(pos))
+            if (ExisteInimigo(pos))
                 matriz[pos.Linha, pos.Coluna] = true;
 
             pos.DefinirValores(Posicao.Linha - 1, Posicao.Coluna + 1);
-            if (Tabuleiro.PosicaoValida(pos) && ExisteInimigo(pos))
+            if (ExisteInimigo(pos))
                 matriz[pos.Linha, pos.Coluna] = true;
 
+            // # Jogada especial - en passant
+            if (Posicao.Linha == 3)
+            {
+                Posicao esquerda = new (Posicao.Linha, Posicao.Coluna - 1);
+                if (ExisteInimigo(esquerda) && Tabuleiro.Peca(esquerda) == _partida.vulneravelEnPassant)
+                    matriz[esquerda.Linha - 1, esquerda.Coluna] = true;
+            
+                Posicao direita = new (Posicao.Linha, Posicao.Coluna + 1);
+                if (ExisteInimigo(direita) && Tabuleiro.Peca(direita) == _partida.vulneravelEnPassant)
+                    matriz[direita.Linha - 1, direita.Coluna] = true;
+            }
         }
         else
         {
             pos.DefinirValores(Posicao!.Linha + 1, Posicao.Coluna);
-            if (Tabuleiro.PosicaoValida(pos) && Livre(pos))
+            if (Livre(pos))
                 matriz[pos.Linha, pos.Coluna] = true;
 
             pos.DefinirValores(Posicao.Linha + 2, Posicao.Coluna);
-            if (Tabuleiro.PosicaoValida(pos) && Livre(pos) && QtdeMovimentos == 0)
+            if (Livre(pos) && QtdeMovimentos == 0)
                 matriz[pos.Linha, pos.Coluna] = true;
 
             pos.DefinirValores(Posicao.Linha + 1, Posicao.Coluna - 1);
-            if (Tabuleiro.PosicaoValida(pos) && ExisteInimigo(pos))
+            if (ExisteInimigo(pos))
                 matriz[pos.Linha, pos.Coluna] = true;
 
             pos.DefinirValores(Posicao.Linha + 1, Posicao.Coluna + 1);
-            if (Tabuleiro.PosicaoValida(pos) && ExisteInimigo(pos))
+            if (ExisteInimigo(pos))
                 matriz[pos.Linha, pos.Coluna] = true;
+
+            // # Jogada especial - en passant
+            if (Posicao.Linha == 4)
+            {
+                Posicao esquerda = new (Posicao.Linha, Posicao.Coluna - 1);
+                if (ExisteInimigo(esquerda) && Tabuleiro.Peca(esquerda) == _partida.vulneravelEnPassant)
+                    matriz[esquerda.Linha + 1, esquerda.Coluna] = true;
+            
+                Posicao direita = new (Posicao.Linha, Posicao.Coluna + 1);
+                if (ExisteInimigo(direita) && Tabuleiro.Peca(direita) == _partida.vulneravelEnPassant)
+                    matriz[direita.Linha + 1, direita.Coluna] = true;
+            }
         }
 
         return matriz;
