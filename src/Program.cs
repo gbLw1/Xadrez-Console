@@ -11,39 +11,45 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        PartidaDeXadrez partida = new();
-
-        while (partida.Encerrada is false)
+        try
         {
-            try
+            PartidaDeXadrez partida = new();
+
+            while (partida.Encerrada is false)
             {
-                Clear();
-                Tela.ImprimirPartida(partida);
+                try
+                {
+                    Clear();
+                    Tela.ImprimirPartida(partida);
 
-                Write("Origem: ");
-                Posicao origem = Tela.LerPosicaoXadrez().FromPosicaoXadrezToPosicaoProgram();
-                partida.ValidarPosicaoOrigem(origem);
+                    Write("Origem: ");
+                    Posicao origem = Tela.LerPosicaoXadrez().FromPosicaoXadrezToPosicaoProgram();
+                    partida.ValidarPosicaoOrigem(origem);
 
-                bool[,] posicoesPossiveis = partida.Tabuleiro.Peca(origem).MovimentosPossiveis();
+                    bool[,] posicoesPossiveis = partida.Tabuleiro.Peca(origem).MovimentosPossiveis();
 
-                Clear();
-                Tela.ImprimirTabuleiro(partida.Tabuleiro, posicoesPossiveis);
+                    Clear();
+                    Tela.ImprimirTabuleiro(partida.Tabuleiro, posicoesPossiveis);
 
-                Write("Destino: ");
-                Posicao destino = Tela.LerPosicaoXadrez().FromPosicaoXadrezToPosicaoProgram();
-                partida.ValidarPosicaoDestino(origem, destino);
+                    Write("Destino: ");
+                    Posicao destino = Tela.LerPosicaoXadrez().FromPosicaoXadrezToPosicaoProgram();
+                    partida.ValidarPosicaoDestino(origem, destino);
 
 
-                partida.RealizarJogada(origem, destino);
+                    partida.RealizarJogada(origem, destino);
+                }
+                catch (TabuleiroException ex)
+                {
+                    WriteLine(ex.Message);
+                    ReadKey();
+                }
             }
-            catch (TabuleiroException ex)
-            {
-                WriteLine(ex.Message);
-                ReadKey();
-            }
+            Clear();
+            Tela.ImprimirPartida(partida);
         }
-
-        Clear();
-        Tela.ImprimirPartida(partida);
+        catch (TabuleiroException ex)
+        {
+            WriteLine(ex.Message);
+        }
     }
 }
