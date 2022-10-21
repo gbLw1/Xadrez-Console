@@ -12,7 +12,6 @@ public class Bispo : Peca
 
     bool PodeMover(Posicao posicao)
     {
-        if (Tabuleiro.PosicaoValida(posicao) is false) return false;
         return Tabuleiro.Peca(posicao) is null || Tabuleiro.Peca(posicao).Cor != Cor;
     }
 
@@ -24,42 +23,42 @@ public class Bispo : Peca
 
         // NO
         pos.DefinirValores(Posicao!.Linha - 1, Posicao.Coluna - 1);
-        while (PodeMover(pos))
+        while (Tabuleiro.PosicaoValida(pos) && PodeMover(pos))
         {
             matriz[pos.Linha, pos.Coluna] = true;
             if (Tabuleiro.Peca(pos) is not null && Tabuleiro.Peca(pos).Cor != Cor)
                 break;
-            pos.DefinirValores(Posicao!.Linha - 1, Posicao.Coluna - 1);
+            pos.DefinirValores(pos.Linha - 1, pos.Coluna - 1);
         }
 
         // NE
         pos.DefinirValores(Posicao!.Linha - 1, Posicao.Coluna + 1);
-        while (PodeMover(pos))
+        while (Tabuleiro.PosicaoValida(pos) && PodeMover(pos))
         {
             matriz[pos.Linha, pos.Coluna] = true;
             if (Tabuleiro.Peca(pos) is not null && Tabuleiro.Peca(pos).Cor != Cor)
                 break;
-            pos.DefinirValores(Posicao!.Linha - 1, Posicao.Coluna + 1);
+            pos.DefinirValores(pos.Linha - 1, pos.Coluna + 1);
         }
 
         // SE
         pos.DefinirValores(Posicao!.Linha + 1, Posicao.Coluna + 1);
-        while (PodeMover(pos))
+        while (Tabuleiro.PosicaoValida(pos) && PodeMover(pos))
         {
             matriz[pos.Linha, pos.Coluna] = true;
             if (Tabuleiro.Peca(pos) is not null && Tabuleiro.Peca(pos).Cor != Cor)
                 break;
-            pos.DefinirValores(Posicao!.Linha + 1, Posicao.Coluna + 1);
+            pos.DefinirValores(pos.Linha + 1, pos.Coluna + 1);
         }
 
         // SO
         pos.DefinirValores(Posicao!.Linha + 1, Posicao.Coluna - 1);
-        while (PodeMover(pos))
+        while (Tabuleiro.PosicaoValida(pos) && PodeMover(pos))
         {
             matriz[pos.Linha, pos.Coluna] = true;
             if (Tabuleiro.Peca(pos) is not null && Tabuleiro.Peca(pos).Cor != Cor)
                 break;
-            pos.DefinirValores(Posicao!.Linha + 1, Posicao.Coluna - 1);
+            pos.DefinirValores(pos.Linha + 1, pos.Coluna - 1);
         }
 
         return matriz;

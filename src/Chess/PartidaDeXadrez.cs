@@ -59,10 +59,9 @@ public class PartidaDeXadrez
         {
             Posicao origemT = new(origem.Linha, origem.Coluna + 3);
             Posicao destinoT = new(origem.Linha, origem.Coluna + 1);
-            Peca T = Tabuleiro.RetirarPeca(origemT);
-            T.IncrementarQtdeMovimentos();
+            Peca? T = Tabuleiro.RetirarPeca(origemT);
+            T!.IncrementarQtdeMovimentos();
             Tabuleiro.ColocarPeca(T, destinoT);
-
         }
 
         // # Jogada especial - roque grande
@@ -70,10 +69,9 @@ public class PartidaDeXadrez
         {
             Posicao origemT = new(origem.Linha, origem.Coluna - 4);
             Posicao destinoT = new(origem.Linha, origem.Coluna - 1);
-            Peca T = Tabuleiro.RetirarPeca(origemT);
-            T.IncrementarQtdeMovimentos();
+            Peca? T = Tabuleiro.RetirarPeca(origemT);
+            T!.IncrementarQtdeMovimentos();
             Tabuleiro.ColocarPeca(T, destinoT);
-
         }
 
         return pecaCapturada;
@@ -102,7 +100,6 @@ public class PartidaDeXadrez
             Tabuleiro.ColocarPeca(T, origemT);
         }
 
-
         // # Jogada especial - roque grande
         if (p is Rei && destino.Coluna == origem.Coluna - 2)
         {
@@ -128,13 +125,11 @@ public class PartidaDeXadrez
         if (EstaEmXeque(Adversaria(JogadorAtual))) Xeque = true;
         else Xeque = false;
 
-        if (TesteXequeMate(Adversaria(JogadorAtual)))
-            Encerrada = true;
-        else
-        {
-            Turno++;
-            MudarJogador();
-        }
+        if (TesteXequeMate(Adversaria(JogadorAtual))) Encerrada = true;
+
+        Turno++;
+        MudarJogador();
+
     }
 
     void MudarJogador()
