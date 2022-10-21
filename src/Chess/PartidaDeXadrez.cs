@@ -129,7 +129,6 @@ public class PartidaDeXadrez
 
         Turno++;
         MudarJogador();
-
     }
 
     void MudarJogador()
