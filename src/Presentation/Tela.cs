@@ -1,5 +1,6 @@
 using Xadrez_Console.Board;
 using Xadrez_Console.Board.Enums;
+using Xadrez_Console.Board.Exceptions;
 using Xadrez_Console.Chess;
 using static System.Console;
 
@@ -51,29 +52,42 @@ public static class Tela
 
     public static void ImprimirTabuleiro(Tabuleiro tabuleiro)
     {
+        ConsoleColor fundoOriginal = BackgroundColor;
+        ConsoleColor corFonteOriginal = ForegroundColor;
+        ConsoleColor corFonteAlterada = ConsoleColor.Magenta;
+
         for (int i = 0; i < tabuleiro.Linhas; i++)
         {
+            ForegroundColor = corFonteAlterada;
             Write($"{8 - i} ");
+            ForegroundColor = corFonteOriginal;
             for (int j = 0; j < tabuleiro.Colunas; j++)
             {
                 ImprimirPeca(tabuleiro.Peca(i, j));
             }
             WriteLine();
         }
+
+        ForegroundColor = corFonteAlterada;
         WriteLine("  A B C D E F G H\n");
+        BackgroundColor = fundoOriginal;
+        ForegroundColor = corFonteOriginal;
     }
 
     public static void ImprimirTabuleiro(Tabuleiro tabuleiro, bool[,] posicoesPossiveis)
     {
         ConsoleColor fundoOriginal = BackgroundColor;
-        ConsoleColor fundoAlterado = ConsoleColor.DarkGray;
+        ConsoleColor corFonteOriginal = ForegroundColor;
+        ConsoleColor corFonteAlterada = ConsoleColor.Magenta;
 
         for (int i = 0; i < tabuleiro.Linhas; i++)
         {
+            ForegroundColor = corFonteAlterada;
             Write($"{8 - i} ");
+            ForegroundColor = corFonteOriginal;
             for (int j = 0; j < tabuleiro.Colunas; j++)
             {
-                if (posicoesPossiveis[i, j]) BackgroundColor = fundoAlterado;
+                if (posicoesPossiveis[i, j]) BackgroundColor = ConsoleColor.DarkGray;
                 else BackgroundColor = fundoOriginal;
 
                 ImprimirPeca(tabuleiro.Peca(i, j));
@@ -81,8 +95,11 @@ public static class Tela
             }
             WriteLine();
         }
+
+        ForegroundColor = corFonteAlterada;
         WriteLine("  A B C D E F G H\n");
         BackgroundColor = fundoOriginal;
+        ForegroundColor = corFonteOriginal;
     }
 
     public static void ImprimirPeca(Peca peca)
@@ -107,8 +124,20 @@ public static class Tela
     public static PosicaoXadrez LerPosicaoXadrez()
     {
         string? s = ReadLine();
+        ValidarInput(s);
         int linha = int.Parse(s![1].ToString());
         char coluna = s[0];
         return new(coluna, linha);
+    }
+
+    static void ValidarInput(string? s)
+    {
+        if (string.IsNullOrWhiteSpace(s) || s.Length != 2)
+            throw new TabuleiroException("Não foi possível converter a posição digitada em uma posição do tabuleiro.");
+
+        char coluna = s[0];
+        if (!int.TryParse(s[1].ToString(), out int linha)
+            || coluna is not 'a' or 'b' or 'c' or 'd' or 'e' or 'f' or 'g' or 'h')
+            throw new TabuleiroException("Valor inválido para Linha ou Coluna.");
     }
 }
