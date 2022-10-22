@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using Xadrez_Console.Board;
 using Xadrez_Console.Board.Enums;
 using Xadrez_Console.Board.Exceptions;
@@ -6,7 +7,7 @@ using static System.Console;
 
 namespace Xadrez_Console.Presentation;
 
-public static class Tela
+public static partial class Tela
 {
     public static void ImprimirPartida(PartidaDeXadrez partida)
     {
@@ -123,21 +124,23 @@ public static class Tela
 
     public static PosicaoXadrez LerPosicaoXadrez()
     {
-        string? s = ReadLine();
-        ValidarInput(s);
-        int linha = int.Parse(s![1].ToString());
-        char coluna = s[0];
+        string input = ReadLine()!;
+        ValidarInput(input);
+
+        int linha = int.Parse(input[1].ToString());
+        char coluna = input.ToLower()[0];
         return new(coluna, linha);
     }
 
-    static void ValidarInput(string? s)
+    private static void ValidarInput(string input)
     {
-        if (string.IsNullOrWhiteSpace(s) || s.Length != 2)
-            throw new TabuleiroException("Não foi possível converter a posição digitada em uma posição do tabuleiro.");
+        if (string.IsNullOrWhiteSpace(input))
+            throw new TabuleiroException("Você deve informar uma posição!");
 
-        char coluna = s[0];
-        if (!int.TryParse(s[1].ToString(), out int linha)
-            || coluna is not 'a' or 'b' or 'c' or 'd' or 'e' or 'f' or 'g' or 'h')
-            throw new TabuleiroException("Valor inválido para Linha ou Coluna.");
+        if (PosicaoRegex().IsMatch(input) is false)
+            throw new TabuleiroException("POSICAO INVALIDA");
     }
+
+    [GeneratedRegex("^[a-h][1-8]$", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.NonBacktracking)]
+    private static partial Regex PosicaoRegex();
 }
