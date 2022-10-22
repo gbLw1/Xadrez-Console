@@ -6,10 +6,7 @@ public class Posicao
     public int Coluna { get; set; }
 
     public Posicao(int linha, int coluna)
-    {
-        Linha = linha;
-        Coluna = coluna;
-    }
+        => (Linha, Coluna) = (linha, coluna);
 
     public void DefinirValores(int linha, int coluna)
         => (Linha, Coluna) = (linha, coluna);

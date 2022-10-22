@@ -5,15 +5,13 @@ namespace Xadrez_Console.Chess;
 
 public class Bispo : Peca
 {
-
     public Bispo(Tabuleiro tabuleiro, Cor cor) : base(tabuleiro, cor) { }
 
     public override string ToString() => "B";
 
     bool PodeMover(Posicao posicao)
-    {
-        return Tabuleiro.Peca(posicao) is null || Tabuleiro.Peca(posicao).Cor != Cor;
-    }
+        => Tabuleiro.PosicaoValida(posicao)
+        && (Tabuleiro.Peca(posicao) is null || Tabuleiro.Peca(posicao).Cor != Cor);
 
     public override bool[,] MovimentosPossiveis()
     {
@@ -23,7 +21,7 @@ public class Bispo : Peca
 
         // NO
         pos.DefinirValores(Posicao!.Linha - 1, Posicao.Coluna - 1);
-        while (Tabuleiro.PosicaoValida(pos) && PodeMover(pos))
+        while (PodeMover(pos))
         {
             matriz[pos.Linha, pos.Coluna] = true;
             if (Tabuleiro.Peca(pos) is not null && Tabuleiro.Peca(pos).Cor != Cor)
@@ -33,7 +31,7 @@ public class Bispo : Peca
 
         // NE
         pos.DefinirValores(Posicao!.Linha - 1, Posicao.Coluna + 1);
-        while (Tabuleiro.PosicaoValida(pos) && PodeMover(pos))
+        while (PodeMover(pos))
         {
             matriz[pos.Linha, pos.Coluna] = true;
             if (Tabuleiro.Peca(pos) is not null && Tabuleiro.Peca(pos).Cor != Cor)
@@ -43,7 +41,7 @@ public class Bispo : Peca
 
         // SE
         pos.DefinirValores(Posicao!.Linha + 1, Posicao.Coluna + 1);
-        while (Tabuleiro.PosicaoValida(pos) && PodeMover(pos))
+        while (PodeMover(pos))
         {
             matriz[pos.Linha, pos.Coluna] = true;
             if (Tabuleiro.Peca(pos) is not null && Tabuleiro.Peca(pos).Cor != Cor)
@@ -53,7 +51,7 @@ public class Bispo : Peca
 
         // SO
         pos.DefinirValores(Posicao!.Linha + 1, Posicao.Coluna - 1);
-        while (Tabuleiro.PosicaoValida(pos) && PodeMover(pos))
+        while (PodeMover(pos))
         {
             matriz[pos.Linha, pos.Coluna] = true;
             if (Tabuleiro.Peca(pos) is not null && Tabuleiro.Peca(pos).Cor != Cor)

@@ -44,9 +44,7 @@ public static class Tela
         Write("[ ");
 
         foreach (var p in pecas)
-        {
             Write($"{p} ");
-        }
 
         Write("]");
     }
@@ -69,7 +67,6 @@ public static class Tela
     {
         ConsoleColor fundoOriginal = BackgroundColor;
         ConsoleColor fundoAlterado = ConsoleColor.DarkGray;
-
 
         for (int i = 0; i < tabuleiro.Linhas; i++)
         {
@@ -109,7 +106,7 @@ public static class Tela
 
     public static PosicaoXadrez LerPosicaoXadrez()
     {
-        string s = ReadLine()!;
+        string? s = ReadLine();
         int linha = int.Parse(s![1].ToString());
         char coluna = s[0];
         return new(coluna, linha);

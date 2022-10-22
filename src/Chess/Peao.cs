@@ -22,7 +22,8 @@ public class Peao : Peca
     }
 
     bool Livre(Posicao posicao)
-        => Tabuleiro.PosicaoValida(posicao) ? Tabuleiro.Peca(posicao) is null : false;
+        => Tabuleiro.PosicaoValida(posicao)
+        && Tabuleiro.Peca(posicao) is null;
 
     public override bool[,] MovimentosPossiveis()
     {
@@ -52,11 +53,11 @@ public class Peao : Peca
             if (Posicao.Linha == 3)
             {
                 Posicao esquerda = new (Posicao.Linha, Posicao.Coluna - 1);
-                if (ExisteInimigo(esquerda) && Tabuleiro.Peca(esquerda) == _partida.vulneravelEnPassant)
+                if (ExisteInimigo(esquerda) && Tabuleiro.Peca(esquerda) == _partida.VulneravelEnPassant)
                     matriz[esquerda.Linha - 1, esquerda.Coluna] = true;
             
                 Posicao direita = new (Posicao.Linha, Posicao.Coluna + 1);
-                if (ExisteInimigo(direita) && Tabuleiro.Peca(direita) == _partida.vulneravelEnPassant)
+                if (ExisteInimigo(direita) && Tabuleiro.Peca(direita) == _partida.VulneravelEnPassant)
                     matriz[direita.Linha - 1, direita.Coluna] = true;
             }
         }
@@ -82,11 +83,11 @@ public class Peao : Peca
             if (Posicao.Linha == 4)
             {
                 Posicao esquerda = new (Posicao.Linha, Posicao.Coluna - 1);
-                if (ExisteInimigo(esquerda) && Tabuleiro.Peca(esquerda) == _partida.vulneravelEnPassant)
+                if (ExisteInimigo(esquerda) && Tabuleiro.Peca(esquerda) == _partida.VulneravelEnPassant)
                     matriz[esquerda.Linha + 1, esquerda.Coluna] = true;
             
                 Posicao direita = new (Posicao.Linha, Posicao.Coluna + 1);
-                if (ExisteInimigo(direita) && Tabuleiro.Peca(direita) == _partida.vulneravelEnPassant)
+                if (ExisteInimigo(direita) && Tabuleiro.Peca(direita) == _partida.VulneravelEnPassant)
                     matriz[direita.Linha + 1, direita.Coluna] = true;
             }
         }
