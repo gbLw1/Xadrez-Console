@@ -138,7 +138,7 @@ public static partial class Tela
             throw new TabuleiroException("Você deve informar uma posição!");
 
         if (PosicaoRegex().IsMatch(input) is false)
-            throw new TabuleiroException("POSICAO INVALIDA");
+            throw new TabuleiroException("Posição inválida.");
     }
 
     [GeneratedRegex("^[a-h][1-8]$", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.NonBacktracking)]
